@@ -1,19 +1,21 @@
 const BABYLON = require("babylonjs");
 
 class Player {
-    constructor(socket,id,scene,game){
+    constructor(socket,id,scene,game,team){
         this.socket=socket;
         this.game=game;
         this.id=id;
         this.scene=scene;
         this.mesh=BABYLON.MeshBuilder.CreateBox("player_"+id,{size:2,height:2,width:1,depth:1},this.scene);
-        this.mesh.position=new BABYLON.Vector3(0,5,0);
         this.prev_cli_frame=0;
         this.jump_start=0;
         this.prev=0;
         this.health=100;
         this.reload=0;
+        this.team=team;
+        this.mesh.team=team;
         this.prev_variations=[];
+        this.spawn();
         //this.serverCheckInt=setInterval((x) => this.serverPosCheck(x),1000,1250);
         socket.on("message",(r)=>{
             if(r.type=="upd")
@@ -52,11 +54,14 @@ class Player {
     
     die(){
         this.health=100;
-        this.respawn();
+        this.spawn();
     }
 
-    respawn(){
-        this.mesh.position=new BABYLON.Vector3(0,5,0);
+    spawn(){
+        if(this.team==1)
+            this.mesh.position=new BABYLON.Vector3(90,5,0);
+        else if (this.team==2)
+            this.mesh.position=new BABYLON.Vector3(-90,5,0);
     }
 
     dispose()
@@ -93,7 +98,7 @@ class Player {
             this.prev_cli_frame=t;
         }
         if((this.pickWithRay(this.rayBetweenTwoPoints(np,this.mesh.position)).hit)||
-        this.mesh.position.subtract(np).multiply(xz_mask).length()>4.25/1000*dt||this.mesh.position.y-np.y>0.00201*dt){
+        this.mesh.position.subtract(np).multiply(xz_mask).length()>7.09/1000*dt||this.mesh.position.y-np.y>0.00201*dt){
             this.rejectPosition(dt);
         } else {
             if(!(this.vOnGround(np)||Math.round((this.mesh.position.y-np.y)*1000)==Math.round(2*dt)))
@@ -171,7 +176,11 @@ class Player {
     }
     
     clientData(){
-        return {x:this.mesh.position.x,y:this.mesh.position.y,z:this.mesh.position.z,h:this.health}
+        return {x:this.mesh.position.x,y:this.mesh.position.y,z:this.mesh.position.z,h:this.health,t:this.team}
+    }
+
+    idData(){
+        return {id:this.id,team:this.team};
     }
 }
 

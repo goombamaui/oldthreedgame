@@ -38,7 +38,7 @@ class Game{
     }
 
     createPlayer(r){
-        this.players[r.id]=new Player(this.scene,r.id);
+        this.players[r.id]=new Player(this.scene,r.id,r.team);
     }
 
     updateProjectiles(data){

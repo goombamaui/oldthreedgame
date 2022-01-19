@@ -21,7 +21,7 @@ class Projectile
         }
         let mv_ray=new BABYLON.Ray(this.p,this.v,dt/1000);
         let coll=this.scene.pickWithRay(mv_ray,(msh)=>{
-            if(msh.name==this.owner.mesh.name)
+            if(msh.name==this.owner.mesh.name||msh.team==this.owner.team)
             {
                 return false;
             }

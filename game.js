@@ -15,6 +15,7 @@ class Game{
         this.io=io;
         this.players={};
         this.projectiles=[];
+        this.teams={1:[],2:[]}
         this.engine=new BABYLON.NullEngine();
         this.cli_upd_int=0;
         this.game_upd_int=0;
@@ -40,16 +41,21 @@ class Game{
         this.prev_frame=t;
     }
 
+    pickTeam(){
+        return this.teams[1].length>this.teams[2].length?2:1;
+    }
+
     createPlayer(sock){
         let currid=this.current_player_id;
         this.current_player_id+=1;
         if(this.current_player_id>Number.MAX_SAFE_INTEGER)
             this.current_player_id=0;
         sock.join(this.name);
-        let new_player=new Player(sock,currid,this.scene,this);
+        let team=this.pickTeam(),new_player=new Player(sock,currid,this.scene,this,team);
+        this.teams[team].push(currid);
         this.players[currid]=new_player;
-        sock.to(this.name).emit("message",{type:"newp",data:{id:currid}});
-        sock.send({type:"unewp",data:{id:currid}});
+        sock.to(this.name).emit("message",{type:"newp",data:new_player.idData()});
+        sock.send({type:"unewp",data:new_player.idData()});
         this.sendAllPlayers(currid);
         return new_player;
     }
@@ -86,15 +92,16 @@ class Game{
             if(ply.id==player_id){
                 sock=ply.socket;
             } else {
-                packet.push({id:ply.id});
+                packet.push(ply.idData());
             }
         }
         this.players[player_id].socket.send({type:"allp",data:packet});
     }
 
     deletePlayer(id){
-        let del_player=this.players[id];
+        let del_player=this.players[id], cteam=this.teams[del_player.team];
         this.io.to(this.name).emit("message",{type:"delp",data:{id:id}});
+        cteam.splice(cteam.indexOf(del_player.id),1);
         del_player.dispose();
         delete this.players[id];
     }
