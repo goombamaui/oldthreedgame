@@ -84,8 +84,9 @@ class Player {
         this.prev=now;
         this.prev_variations.pop();
         this.prev_variations.unshift(variation);
-        if(variation>300||Math.abs(this.prev_variations.reduce((a,b)=>a+b,0))>100)
+        if(variation>300)
         {
+            console.log(variation);
             console.log(Math.abs(this.prev_variations.reduce((a,b)=>a+b,0)))
             this.rejectPosition(sdt);
             this.prev_cli_frame=t;
