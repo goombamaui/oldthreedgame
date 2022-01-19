@@ -102,7 +102,6 @@ class Player {
         this.mesh.position.subtract(np).multiply(xz_mask).length()>7.09/1000*dt||this.mesh.position.y-np.y>0.00201*dt){
             this.rejectPosition(dt);
         } else {
-            console.log(this.vOnGround(np));
             if(!(this.vOnGround(np)||Math.round((this.mesh.position.y-np.y)*1000)==Math.round(2*dt)))
             {
                 let diff=np.y-this.mesh.position.y;
