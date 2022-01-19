@@ -105,6 +105,7 @@ class MyPlayer extends Player{
         this.mesh.visibility=0
         this.mesh.checkCollisions=true;
         this.jump_start=0
+        this.health_mesh.visibility=false;
 
         this.socket.on("fixpo",(r)=>{
             this.mesh.position=new BABYLON.Vector3(r.x,r.y,r.z);

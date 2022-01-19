@@ -15,7 +15,6 @@ class Projectile{
         this.mesh=BABYLON.MeshBuilder.CreateSphere("sphere", {diameter:0.2}, scene);
         this.mesh.position=pos;
         this.prev_frame=Date.now();
-        console.log(Projectile.PROJECTILE_MATERIAL)
         this.mesh.material=Projectile.PROJECTILE_MATERIAL;
     }
     dispose(){

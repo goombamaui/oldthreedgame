@@ -3,7 +3,8 @@ class Game{
         this.engine=engine;
         this.scene=scene;
         this.socket=io();
-        this.socket.on("message",(r)=>this.messageHandler(r))
+        this.socket.on("serv_upd",(r)=>this.serverUpdateHandler(r))
+        this.socket.on("chat_upd",(r)=>this.updateChat(r))
         this.players={};
         this.projectiles={};
         this.my_player=null;
@@ -15,7 +16,11 @@ class Game{
         this.setupListeners();
     }
 
-    messageHandler(r){
+    updateChat(r){
+        
+    }
+
+    serverUpdateHandler(r){
         if(r.type=="update")
         {
             let i;

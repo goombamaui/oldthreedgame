@@ -54,8 +54,8 @@ class Game{
         let team=this.pickTeam(),new_player=new Player(sock,currid,this.scene,this,team);
         this.teams[team].push(currid);
         this.players[currid]=new_player;
-        sock.to(this.name).emit("message",{type:"newp",data:new_player.idData()});
-        sock.send({type:"unewp",data:new_player.idData()});
+        sock.to(this.name).emit("serv_upd",{type:"newp",data:new_player.idData()});
+        sock.emit("serv_upd",{type:"unewp",data:new_player.idData()});
         this.sendAllPlayers(currid);
         return new_player;
     }
@@ -95,12 +95,12 @@ class Game{
                 packet.push(ply.idData());
             }
         }
-        this.players[player_id].socket.send({type:"allp",data:packet});
+        this.players[player_id].socket.emit("serv_upd",{type:"allp",data:packet});
     }
 
     deletePlayer(id){
         let del_player=this.players[id], cteam=this.teams[del_player.team];
-        this.io.to(this.name).emit("message",{type:"delp",data:{id:id}});
+        this.io.to(this.name).emit("serv_upd",{type:"delp",data:{id:id}});
         cteam.splice(cteam.indexOf(del_player.id),1);
         del_player.dispose();
         delete this.players[id];
@@ -113,7 +113,7 @@ class Game{
         }
         for(i of this.projectiles)
             packet.projectiles[i.id]=i.clientData();
-        this.io.to(this.name).emit("message",{type:"update",data:packet})
+        this.io.to(this.name).emit("serv_upd",{type:"update",data:packet})
     }
 }
 

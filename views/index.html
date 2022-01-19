@@ -43,6 +43,18 @@
                 width:100%;
                 height:100%;
             }
+            #menu {
+                width:70%;
+                height:70%;
+                max-width:600px;
+                max-height:400px;
+                position:absolute;
+                top:50%;
+                left:50%;
+                transform: translate(-50%, -50%);
+                background-color:rgba(0,0,0,0.7);
+                color:white;
+            }
         </style>
     </head>
     <body style="width:100%;height:100%;">
@@ -51,13 +63,23 @@
             <div id="healthbar"></div>
         </div>
         <div id="menu" style="display:none">
-            
+            <label for="mouse_sens">Mouse Sensitivity:</label>
+            <input type="range" min="0" max="2000" value="1500" class="slider" id="mouse_sens" onchange="game.camera.angularSensibility=2300-this.value">
         </div>
         <script>
             const canvas = document.getElementById("renderCanvas");
             const engine = new BABYLON.Engine(canvas,true);
 
             window.onresize=()=>engine.resize();
+            window.onkeydown=(r)=>{
+                if(r.key=="Escape"){
+                    let m=document.getElementById("menu");
+                    if(m.style.display=="none")
+                        m.style.display="block";
+                    else
+                        m.style.display="none";
+                }
+            }
 
             canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock;
             document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock;
