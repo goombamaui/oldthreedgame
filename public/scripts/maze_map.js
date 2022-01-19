@@ -10,7 +10,7 @@ mazeMap=function(scene,loc){
     const ground = BABYLON.MeshBuilder.CreateGround("ground", {width:200,height:200}, scene);
 
     scene.clearColor=new BABYLON.Color3.Black;
-    BABYLON.SceneLoader.Append(my_loc+"/objects/", "maze.glb", scene, function (sc) {
+    BABYLON.SceneLoader.Append(my_loc+"/objects/", "maze2.glb", scene, function (sc) {
         sc.meshes.forEach(r => {
             r.checkCollisions=true;
         })
