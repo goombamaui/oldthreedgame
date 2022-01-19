@@ -86,7 +86,7 @@ class Player {
         this.prev_variations.unshift(variation);
         if(variation>300||Math.abs(this.prev_variations.reduce((a,b)=>a+b,0))>100)
         {
-            console.log(variation);
+            console.log(Math.abs(this.prev_variations.reduce((a,b)=>a+b,0)))
             this.rejectPosition(sdt);
             this.prev_cli_frame=t;
             return;
@@ -102,6 +102,7 @@ class Player {
         this.mesh.position.subtract(np).multiply(xz_mask).length()>7.09/1000*dt||this.mesh.position.y-np.y>0.00201*dt){
             this.rejectPosition(dt);
         } else {
+            console.log(this.vOnGround(np));
             if(!(this.vOnGround(np)||Math.round((this.mesh.position.y-np.y)*1000)==Math.round(2*dt)))
             {
                 let diff=np.y-this.mesh.position.y;
@@ -130,6 +131,10 @@ class Player {
 
     vOnGround(r){
         return (this.pickWithRay(new BABYLON.Ray(r,new BABYLON.Vector3(0,-1.1,0),1)).hit)
+    }
+
+    pOnGroundWV(r){
+        return this.pickWithRay(new BABYLON.Ray(r,new BABYLON.Vector3(0,-1.1,0),1)).hit
     }
 
     dToGround(r){
