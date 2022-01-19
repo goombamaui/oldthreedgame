@@ -78,6 +78,7 @@ class Player {
         this.prev=now;
         if(variation>50)
         {
+            console.log(variation);
             this.rejectPosition(sdt);
             this.prev_cli_frame=t;
             return;
