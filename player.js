@@ -13,6 +13,7 @@ class Player {
         this.prev=0;
         this.health=100;
         this.reload=0;
+        this.prev_variations=[];
         //this.serverCheckInt=setInterval((x) => this.serverPosCheck(x),1000,1250);
         socket.on("message",(r)=>{
             if(r.type=="upd")
@@ -76,14 +77,15 @@ class Player {
         let np=new BABYLON.Vector3(x,y,z),now=Date.now(),sdt=now-this.prev,dt=t-this.prev_cli_frame,xz_mask=new BABYLON.Vector3(1,0,1),
         variation=Math.abs(dt-sdt);
         this.prev=now;
-        if(variation>50)
+        this.prev_variations.pop();
+        this.prev_variations.unshift(variation);
+        if(variation>100||Math.abs(variation-this.prev_variations.reduce((a,b)=>a+b,0))>100)
         {
-            console.log(variation);
             this.rejectPosition(sdt);
             this.prev_cli_frame=t;
             return;
         }
-        if(dt<0||t<this.prev_cli_frame||t>now+5000||t<now-5000){
+        if(dt<0||t<this.prev_cli_frame||t>now+10000||t<now-10000){
             this.rejectPosition(sdt);
             this.prev_cli_frame=0;
             return;
