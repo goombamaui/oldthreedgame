@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babylonjs/5.0.0-alpha.5/babylon.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/babylonjs-loaders@4.2.1/babylonjs.loaders.min.js"></script>
+        <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="scripts/game.js"></script>
+        <script src="scripts/player.js"></script>
+        <script src="scripts/projectile.js"></script>
+        <script src="scripts/maze_map.js"></script>
+        <style type="text/css">
+            html, body
+            {
+                margin:0;
+                padding:0;
+                width:100%;
+                height:100%;
+                overflow:hidden;
+                background-color: #000000;
+            }
+            
+            #renderCanvas
+            {
+                width:100%;
+                height:100%;
+                touch-action:none;
+                display:block;
+                outline:none;
+            }
+        </style>
+    </head>
+    <body style="width:100%;height:100%;">
+        <canvas id="renderCanvas" style="width:100%;height:100%;"></canvas>
+        <script>
+            const canvas = document.getElementById("renderCanvas");
+            const engine = new BABYLON.Engine(canvas,true);
+
+            window.onresize=()=>engine.resize();
+
+            canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock;
+            document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock;
+
+            canvas.onclick = function() {
+                canvas.requestPointerLock();
+            }
+
+            var rendered_scene=null;
+            const maze_map = new BABYLON.Scene(engine);
+            mazeMap(maze_map);
+            rendered_scene=maze_map;
+            Projectile.init(rendered_scene);
+            Player.init(rendered_scene);
+
+            window.game=new Game(engine,rendered_scene,canvas);
+            engine.runRenderLoop(function(){
+                rendered_scene.render();
+                game.render();
+                try{
+                    game.my_player.updateClientPosition();
+                } catch(err){console.log(err)}
+            })
+        </script>
+    </body>
+</html>
