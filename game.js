@@ -5,6 +5,8 @@ const mazeMap = require("./public/scripts/maze_map.js").mazeMap;
 const Projectile = require("./projectile.js").Projectile;
 global.XMLHttpRequest = require('xhr2').XMLHttpRequest;
 
+host = process.env.HOST || "http://localhost"
+
 class Game{
     constructor(name,io){
         this.current_player_id=0;
@@ -21,7 +23,7 @@ class Game{
 
     startGame(){
         this.scene=new BABYLON.Scene(this.engine);
-        mazeMap(this.scene,"http://localhost/");
+        mazeMap(this.scene,host);
         let mock_camera=new BABYLON.UniversalCamera("mockcam",new BABYLON.Vector3(0,0,0),this.scene);
         this.cli_upd_int=setInterval(()=>{this.updateClients()},33);
         this.game_upd_int=setInterval(()=>{this.updateGame();},33);
