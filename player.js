@@ -99,7 +99,7 @@ class Player {
             this.prev_cli_frame=t;
         }
         if((this.pickWithRay(this.rayBetweenTwoPoints(np,this.mesh.position)).hit)||
-        this.mesh.position.subtract(np).multiply(xz_mask).length()>7.09/1000*dt||this.mesh.position.y-np.y>0.00201*dt){
+        this.mesh.position.subtract(np).multiply(xz_mask).length()>7.09/1000*dt||this.mesh.position.subtract(np).length()>12*dt||this.mesh.position.y-np.y>0.00201*dt){
             this.rejectPosition(dt);
         } else {
             if(!(this.pOnGroundWV(np)||Math.round((this.mesh.position.y-np.y)*1000)==Math.round(2*dt)))
@@ -134,10 +134,10 @@ class Player {
 
     pOnGroundWV(r){
         return this.pickWithRay(new BABYLON.Ray(r,new BABYLON.Vector3(0,-1.1,0),1)).hit||
-        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(0.4,0,0.4)),new BABYLON.Vector3(0,-1.1,0),1)).hit||
-        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(-0.4,0,0.4)),new BABYLON.Vector3(0,-1.1,0),1)).hit||
-        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(0.4,0,-0.4)),new BABYLON.Vector3(0,-1.1,0),1)).hit||
-        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(-0.4,0,-0.4)),new BABYLON.Vector3(0,-1.1,0),1)).hit
+        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(0.5,0,0.5)),new BABYLON.Vector3(0,-1.1,0),1)).hit||
+        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(-0.5,0,0.5)),new BABYLON.Vector3(0,-1.1,0),1)).hit||
+        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(0.5,0,-0.5)),new BABYLON.Vector3(0,-1.1,0),1)).hit||
+        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(-0.5,0,-0.5)),new BABYLON.Vector3(0,-1.1,0),1)).hit
 
     }
 
