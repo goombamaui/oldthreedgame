@@ -79,8 +79,7 @@ class Game{
                 this.projectiles.splice(i,1);
                 if(hit!==true)
                 {
-                    if(this.projectiles.type==0)
-                        this.players[hit].dealDamage(20);
+                    this.players[hit].dealDamage(20);
                 }
             }
         }
