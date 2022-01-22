@@ -133,11 +133,11 @@ class Player {
     }
 
     pOnGroundWV(r){
-        return this.pickWithRay(new BABYLON.Ray(r,new BABYLON.Vector3(0,-1.1,0),1)).hit||
-        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(0.5,0,0.5)),new BABYLON.Vector3(0,-1.1,0),1)).hit||
-        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(-0.5,0,0.5)),new BABYLON.Vector3(0,-1.1,0),1)).hit||
-        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(0.5,0,-0.5)),new BABYLON.Vector3(0,-1.1,0),1)).hit||
-        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(-0.5,0,-0.5)),new BABYLON.Vector3(0,-1.1,0),1)).hit
+        return this.pickWithRay(new BABYLON.Ray(r,new BABYLON.Vector3(0,-1.2,0),1)).hit||
+        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(0.5,0,0.5)),new BABYLON.Vector3(0,-1.2,0),1)).hit||
+        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(-0.5,0,0.5)),new BABYLON.Vector3(0,-1.2,0),1)).hit||
+        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(0.5,0,-0.5)),new BABYLON.Vector3(0,-1.2,0),1)).hit||
+        this.pickWithRay(new BABYLON.Ray(r.add(new BABYLON.Vector3(-0.5,0,-0.5)),new BABYLON.Vector3(0,-1.2,0),1)).hit
 
     }
 
