@@ -125,7 +125,7 @@ class Player {
     }
 
     onGround(){
-        return (this.pickWithRay(new BABYLON.Ray(this.mesh.position,new BABYLON.Vector3(0,-1.1,0),1)).hit)
+        return (this.pickWithRay(new BABYLON.Ray(this.mesh.position,new BABYLON.Vector3(0,-1.3,0),1)).hit)
     }
 
     vOnGround(r){
