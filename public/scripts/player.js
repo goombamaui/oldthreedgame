@@ -159,6 +159,7 @@ class MyPlayer extends Player{
         }
         mt.y-=2*dt/1000
         this.mesh.moveWithCollisions(mt);
+        //this.mesh.position.addInPlace(mt);
     }
 
     onGround(){

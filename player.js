@@ -13,7 +13,6 @@ class Player {
         this.health=100;
         this.reload=0;
         this.team=team;
-        this.mesh.team=team;
         this.prev_variations=[];
         this.spawn();
         //this.serverCheckInt=setInterval((x) => this.serverPosCheck(x),1000,1250);
@@ -86,7 +85,6 @@ class Player {
         this.prev_variations.unshift(variation);
         if(variation>300)
         {
-            console.log(variation);
             this.rejectPosition(sdt);
             this.prev_cli_frame=t;
             return;

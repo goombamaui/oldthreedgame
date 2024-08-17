@@ -9,8 +9,8 @@
   "author": "Aarush Vailaya",
   "license": "ISC",
   "dependencies": {
-    "babylonjs": "^5.0.0-alpha.5",
-    "babylonjs-loaders": "4.2.1",
+    "babylonjs": "5.8.0",
+    "babylonjs-loaders": "5.8.0",
     "express": "4.17.2",
     "socket.io": "4.4.0",
     "xhr2": "0.2.1"
